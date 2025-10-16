@@ -1,0 +1,50 @@
+<div class="page__mask">
+  <div class="form__container" [formGroup]="form">
+    <img src="assets/logo.svg" alt="Logo do Senai Notes.">
+
+    <h1>Crie sua conta</h1>
+    <p class="subtitle">
+      Cadastre-se para comecar a organizar suas notas e aumentar sua produtividade.
+    </p>
+
+    <label>
+      Nome
+      <input
+        type="text"
+        placeholder="Nome"
+        formControlName="name">
+    </label>
+    <div class="error" *ngIf="name?.touched && name?.invalid">
+      <span *ngIf="name?.errors?.['required']">Informe o nome.</span>
+    </div>
+    
+    <label>
+      Endereco de email
+      <input
+        type="email"
+        placeholder="email@examplo.com"
+        formControlName="email">
+    </label>
+    <div class="error" *ngIf="email?.touched && email?.invalid">
+      <span *ngIf="email?.errors?.['required']">Informe o e-mail.</span>
+      <span *ngIf="email?.errors?.['email']">E-mail invalido.</span>
+    </div>
+
+    <label>
+      Senha
+      <input
+        type="password"
+        placeholder="Senha"
+        formControlName="password">
+    </label>
+    <div class="error" *ngIf="password?.touched && password?.invalid">
+      <span *ngIf="password?.errors?.['required']">Informe a senha.</span>
+    </div>
+
+    <button (click)="onSignUpClick()">Cadastrar</button>
+
+    <p class="form__hint">
+      Ja possui uma conta? <a routerLink="/login" href="/login">Entrar</a>
+    </p>
+  </div>
+</div>

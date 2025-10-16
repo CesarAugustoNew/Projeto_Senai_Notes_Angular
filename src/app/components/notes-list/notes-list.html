@@ -1,0 +1,26 @@
+<button class="btn__primary" (click)="onCreateNote()">
+  + Criar nova nota
+</button>
+
+<div class="notes__list">
+  <div
+    class="note__item"
+    *ngFor="let note of notes;"
+    (click)="onSelect(note)"
+  >
+    <div
+      class="image"
+      [ngStyle]="{ 'background-image': 'url(' + (note.image || '') + ')' }"
+    ></div>
+
+    <div class="texts">
+      <p class="title">{{ note.title }}</p>
+
+      <div class="tags">
+        <span *ngFor="let tag of note.tags">{{ tag }}</span>
+      </div>
+
+      <p class="date">{{ note.date | date:'shortDate' }}</p>
+    </div>
+  </div>
+</div>

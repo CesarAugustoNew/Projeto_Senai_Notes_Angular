@@ -1,0 +1,27 @@
+<!-- Logo -->
+<img class="logo" src="assets/logo.svg" alt="Logo da aplicacao.">
+
+<!-- Acoes principais -->
+<div class="buttons-container">
+  <button (click)="aoListarTodasAsNotas()">
+    <i class="fa-solid fa-note-sticky" aria-hidden="true"></i>
+    Todas as notas
+  </button>
+
+  <button (click)="aoListarArquivadas()">
+    <i class="fa-solid fa-box-archive" aria-hidden="true"></i>
+    Arquivadas
+  </button>
+</div>
+
+<!-- Tags -->
+<div class="tags-container">
+  <span class="tag">Etiquetas</span>
+
+  <ng-container *ngFor="let tag of tags">
+    <button (click)="aoFiltrarPorTag(tag.name)">
+      <i class="fa-solid fa-tags" aria-hidden="true"></i>
+      {{ tag.name }}
+    </button>
+  </ng-container>
+</div>

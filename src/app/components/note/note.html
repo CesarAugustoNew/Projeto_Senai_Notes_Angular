@@ -1,0 +1,55 @@
+<ng-container *ngIf="notaSelecionada; else nenhumaNota">
+  <!-- Area de imagem com preview -->
+  <label
+    class="image"
+    [ngStyle]="{ 'background-image': 'url(' + (imageURL || notaSelecionada?.image || '') + ')' }"
+  >
+    <input type="file" class="file__input" (change)="aoDefinirAImagem($event)" />
+  </label>
+
+  <!-- Titulo -->
+  <input
+    class="title"
+    type="text"
+    [(ngModel)]="title"
+  />
+
+  <!-- Metadados -->
+  <div class="info__list">
+    <div class="info__item">
+      <div class="info__name">
+        <i class="fa-solid fa-tags" aria-hidden="true"></i>
+        <p>Etiquetas</p>
+      </div>
+      <input
+        type="text"
+        [(ngModel)]="tags"
+        placeholder="Digite aqui as etiquetas..."
+      />
+    </div>
+
+    <div class="info__item">
+      <div class="info__name">
+        <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>
+        <p>Ultima edição</p>
+      </div>
+      <p>{{ notaSelecionada?.date | date:'shortDate' }}</p>
+    </div>
+  </div>
+
+  <!-- Descricao -->
+  <textarea
+    placeholder="Digite sua nota..."
+    [(ngModel)]="description"
+  ></textarea>
+
+  <!-- Botoes -->
+  <div class="buttons__container">
+    <button class="btn__primary" (click)="onSaveNote()">Salvar</button>
+    <button class="btn__secondary" (click)="aoFecharANota.emit()">Cancelar</button>
+  </div>
+</ng-container>
+
+<ng-template #nenhumaNota>
+  <p>Nenhuma nota selecionada no momento.</p>
+</ng-template>

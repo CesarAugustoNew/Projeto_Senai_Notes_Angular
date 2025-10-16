@@ -1,0 +1,85 @@
+:host {
+
+    position: fixed;
+    
+    left: 00px;
+    top: 0px;
+
+    width: 15vw;
+    height: 100vh;
+
+    border-right: 1px solid #ccc;
+    background-color: white;
+
+    padding: 20px;
+
+}
+
+:host .logo {
+
+    margin-bottom: 24px;
+
+}
+
+:host .buttons-container {
+
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+}
+
+:host .buttons-container button,
+:host .tags-container button {
+
+    display: flex;
+    align-items: center;
+    padding: 6px 5px;
+    background-color: transparent;
+    border: none;
+    color: #0E121B;
+    margin-bottom: 5px;
+
+    width: 100%;
+
+}
+
+:host button i {
+
+    margin-right: 8px;
+
+}
+
+:host .buttons-container button:hover,
+:host .tags-container button:hover {
+
+    background-color: #e4e4e4;
+    border-radius: 5px;
+
+}
+
+:host .buttons-container button img,
+:host .buttons-container button .icon,
+:host .tags-container button img,
+:host .tags-container button .icon
+ {
+
+    margin-right: 10px;
+    color: #486cff;
+    font-size: 15px;
+
+}
+
+:host .tags-container {
+
+    padding-top: 20px;
+
+}
+
+:host .tags-container .tag {
+
+    margin-bottom: 10px;
+    display: block;
+    font-weight: bold;
+
+}

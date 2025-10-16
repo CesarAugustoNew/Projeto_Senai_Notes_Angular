@@ -1,0 +1,34 @@
+:host {
+
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: 25%;
+
+    background-color: white;
+
+    border-left: 1px solid #E4E7EC;
+
+    padding: 20px;
+
+}
+
+:host button {
+
+    background-color: transparent;
+    border: 1px solid #CACFD8;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+    text-align: left;
+    color: #0E121B;
+
+}
+
+:host button .icon {
+
+    margin-right: 10px;
+
+}

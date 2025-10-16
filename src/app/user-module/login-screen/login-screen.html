@@ -1,0 +1,39 @@
+<div class="page__mask">
+  <div class="form__container" [class.invalid]="form.invalid && (form.touched || form.dirty)">
+    <img src="/assets/logo.svg" alt="Logo do Senai Notes.">
+
+    <h1>Bem-vindo ao Note</h1>
+    <p class="subtitle">Faca login para continuar</p>
+
+    <div style="width: 100%;" [formGroup]="form" novalidate>
+      <label>
+        Endereco de email
+        <input
+          type="email"
+          placeholder="email@exemplo.com"
+          formControlName="email">
+      </label>
+      <div class="error" *ngIf="email?.touched && email?.invalid">
+        <span *ngIf="email?.errors?.['required']">Informe o e-mail.</span>
+        <span *ngIf="email?.errors?.['email']">E-mail invalido.</span>
+      </div>
+
+      <label>
+        Senha
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="senha">
+      </label>
+      <div class="error" *ngIf="password?.touched && password?.invalid">
+        <span *ngIf="password?.errors?.['required']">Informe a senha.</span>
+      </div>
+
+      <button type="submit" (click)="onLoginClick()">Entrar</button>
+
+      <p class="form__hint">
+        Ainda nao possui conta? <a routerLink="/new-user" href="/new-user">Cadastre-se</a>
+      </p>
+    </div>
+  </div>
+</div>

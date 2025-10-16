@@ -1,0 +1,37 @@
+<div class="page__container">
+  <!-- Painel esquerdo com filtros -->
+  <left-panel
+    (enviarTag)="onEnviarTag($event)"
+    (listarSomenteArquivadas)="onListarSomenteArquivadas($event)">
+  </left-panel>
+
+  <div class="page__content">
+    <!-- Cabecalho -->
+    <header
+      [somenteArquivadas]="somenteArquivadas"
+      [tag]="tag"
+      [(termoPesquisado)]="termoPesquisado">
+    </header>
+
+    <div class="page__content__main">
+      <notes-list
+        (enviarNota)="onEnviarNota($event)"
+        [tagSelecionada]="tag"
+        [somenteArquivadas]="somenteArquivadas"
+        [atualizarLista]="atualizarLista"
+        [termoPesquisado]="termoPesquisado">
+      </notes-list>
+
+      <note
+        [notaSelecionada]="nota"
+        (aoFecharANota)="onFecharNota()">
+      </note>
+
+      <note-options
+        *ngIf="nota"
+        [notaSelecionada]="nota"
+        (aoFecharANota)="onFecharNota()">
+      </note-options>
+    </div>
+  </div>
+</div>

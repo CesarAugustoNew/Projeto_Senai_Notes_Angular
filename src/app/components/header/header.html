@@ -1,0 +1,33 @@
+<nav class="page__content__header">
+  <div class="left">
+    <p>{{ somenteArquivadas ? 'Somente arquivadas' : 'Todas as notas' }}{{ tag ? (' - ' + tag) : '' }}</p>
+  </div>
+
+  <div class="right">
+    <div class="search__input">
+      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+      <input
+        type="search"
+        placeholder="Buscar notas..."
+        [value]="termoPesquisado"
+        (input)="onSearchChange($event)"
+        aria-label="Buscar notas"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="user__menu"
+         (mouseenter)="showDropdown()"
+         (mouseleave)="hideDropdown()">
+      <button>
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+
+      <div class="dropdown" *ngIf="isDropdownVisible">
+        <ul>
+          <li (click)="onLogoutClick()">Sair</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

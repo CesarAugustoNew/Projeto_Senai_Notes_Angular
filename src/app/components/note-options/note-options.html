@@ -1,0 +1,14 @@
+<button *ngIf="notaSelecionada?.archived" (click)="onUnarchiveNote()">
+  <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+  Desarquivar nota
+</button>
+
+<button *ngIf="!notaSelecionada?.archived" (click)="onArchiveNote()">
+  <i class="fa-solid fa-box-archive" aria-hidden="true"></i>
+  Arquivar nota
+</button>
+
+<button (click)="onDeleteNote()">
+  <i class="fa-solid fa-trash" aria-hidden="true"></i>
+  Excluir nota
+</button>
