@@ -5,6 +5,7 @@ Senai Notes é uma aplicação web que implementa a experiência de criar, organ
 ## Demonstração
 <img height="941" alt="image" src="https://github.com/user-attachments/assets/0edb0e09-0565-45c2-804d-b827814e1e63" />
 <br>
+<br>
 <img height="941" alt="image" src="https://github.com/user-attachments/assets/0bcaf23e-6473-4ebd-933e-3ed78850f7e6" />
 
 
