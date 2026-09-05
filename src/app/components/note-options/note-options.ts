@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 export interface NoteModel {
   id: string | number;
@@ -18,7 +19,7 @@ export class NoteOptions {
   @Input() notaSelecionada!: NoteModel;
   @Output() aoFecharANota = new EventEmitter<void>();
 
-  private readonly baseUrl = 'https://senai-gpt-api.azurewebsites.net/senainotes/notes';
+  private readonly baseUrl = `${environment.apiUrl}/senainotes/notes`;
 
   private buildHeaders(includeJson = false): Record<string, string> {
     const headers: Record<string, string> = includeJson ? { 'Content-Type': 'application/json' } : {};

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface NoteItem {
   id: string | number;
@@ -22,7 +23,7 @@ export interface NoteItem {
   styleUrls: ['./notes-list.css']
 })
 export class NotesList implements OnInit, OnChanges {
-  private readonly baseUrl = 'https://senai-gpt-api.azurewebsites.net/senainotes/notes';
+  private readonly baseUrl = `${environment.apiUrl}/senainotes/notes`;
   private rawNotes: NoteItem[] = [];
 
   @Input() tagSelecionada: string | null = null;

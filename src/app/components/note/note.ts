@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 export interface NoteModel {
   id: string | number;
@@ -84,7 +85,7 @@ export class Note implements OnChanges {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch(`https://senai-gpt-api.azurewebsites.net/senainotes/notes/${this.notaSelecionada.id}`, {
+      const response = await fetch(`${environment.apiUrl}/senainotes/notes/${this.notaSelecionada.id}`, {
         method: 'PUT',
         headers,
         body: JSON.stringify(payload)

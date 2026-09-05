@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom, timeout } from 'rxjs';
 import { ThemeToggle } from '../../components/theme-toggle/theme-toggle';
+import { environment } from '../../../environments/environment';
 
 interface CreateUserResponse {
   [key: string]: unknown;
@@ -56,7 +57,7 @@ export class NewUserScreen {
 
     try {
       await firstValueFrom(
-        this.http.post<CreateUserResponse>('https://senai-gpt-api.azurewebsites.net/users', { name, email, password })
+        this.http.post<CreateUserResponse>(`${environment.apiUrl}/users`, { name, email, password })
           .pipe(timeout(20000))
       );
 

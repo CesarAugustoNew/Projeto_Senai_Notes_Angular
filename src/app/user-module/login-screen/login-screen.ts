@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom, timeout } from 'rxjs';
 import { ThemeToggle } from '../../components/theme-toggle/theme-toggle';
+import { environment } from '../../../environments/environment';
 
 interface LoginResponse {
   accessToken?: string;
@@ -60,7 +61,7 @@ export class LoginScreen {
 
     try {
       const response = await firstValueFrom(
-        this.http.post<LoginResponse>('https://senai-gpt-api.azurewebsites.net/login', { email, password })
+        this.http.post<LoginResponse>(`${environment.apiUrl}/login`, { email, password })
           // Sem timeout, se a API demorar (ex.: "acordando" de um plano
           // gratuito que hiberna quando fica sem uso) a tela ficava
           // travada indefinidamente, parecendo que "não vai".

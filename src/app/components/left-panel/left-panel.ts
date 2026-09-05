@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 interface Tag {
   id: number | string;
@@ -35,7 +36,7 @@ export class LeftPanel implements OnInit {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch('https://senai-gpt-api.azurewebsites.net/senainotes/tags', {
+      const response = await fetch(`${environment.apiUrl}/senainotes/tags`, {
         headers
       });
       const data = (await response.json()) as Tag[];
