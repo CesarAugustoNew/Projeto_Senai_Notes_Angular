@@ -1,78 +1,63 @@
-﻿# Senai Notes (Angular)
- 
-Senai Notes é uma aplicação web que implementa a experiência de criar, organizar e revisar notas com Angular 20. O foco é fornecer uma interface moderna para usuários autenticados gerenciarem suas anotações em qualquer dispositivo.
+<div align="center">
 
-## Demonstração
-<img width="1916" height="916" alt="image" src="https://github.com/user-attachments/assets/40b53807-a63a-4db5-bcfe-d5ebed7e5fee" />
-<br>
-<br>
-<img width="1918" height="918" alt="image" src="https://github.com/user-attachments/assets/c0901375-3729-4a13-9129-69d6f16d21e6" />
+<img src="https://raw.githubusercontent.com/twbs/icons/main/icons/journal-text.svg" width="60" alt="Logo" />
 
+# Senai Notes
 
+Um sistema de anotações completo, com login e permissões próprias, construído com **Angular** no front-end e **Java (Spring Boot)** no back-end — publicado em nuvem, pronto para ser acessado de qualquer lugar.
 
-### Aplicação publicada
-https://senai-notes-angular.vercel.app/
+[![Frontend](https://img.shields.io/badge/Frontend-Angular-DD0031?style=flat-square&logo=angular&logoColor=white)](#)
+[![Backend](https://img.shields.io/badge/Backend-Spring%20Boot-6DB33F?style=flat-square&logo=spring&logoColor=white)](#)
+[![Database](https://img.shields.io/badge/Database-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white)](#)
+[![Deploy Front](https://img.shields.io/badge/Deploy%20Front-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](#)
+[![Deploy Back](https://img.shields.io/badge/Deploy%20Back-Render-46E3B7?style=flat-square&logo=render&logoColor=white)](#)
 
-Usuário de teste:
-  - E-mail: front@email.com
-  - Senha: frontdomina 
+[**🔗 Acessar a aplicação**](https://projeto-senai-notes-angular.vercel.app) · [**📘 Ver documentação da API (Swagger)**](https://springbootapi-senai-notes.onrender.com/swagger-ui.html)
 
-## Funcionalidades principais
+</div>
 
-- **Autenticação** com guarda de rotas; tokens JWT são persistidos no `localStorage`.
-- **Cadastro de usuário** com fluxo de criação e redirecionamento automático para login.
-- **Lista de notas** com carregamento dinâmico da API e visualização em cards.
-- **Criação de notas** com dados padrão, imagem ilustrativa e feedback imediato ao usuário.
-- **Edição completa** de título, descrição, etiquetas e imagem (preview local da imagem enviada).
-- **Filtros por etiquetas** consumindo o catálogo fornecido pela API.
-- **Busca textual** por título, descrição ou etiquetas, com atualização instantânea.
-- **Arquivar, desarquivar e excluir** notas diretamente da tela principal.
-- **Feedbacks de UI** com toasts simulados, alerts e estados de carregamento.
+---
 
-## Arquitetura e tecnologias
+## Sobre o projeto
 
-- Angular 20 com componentes standalone e `ChangeDetection` manual onde necessário.
-- TypeScript 5.9 e RxJS para composições assíncronas (`firstValueFrom`).
-- Angular Router com guarda de autenticação (`authGuard`) e lazy loading de componentes.
-- Angular Forms: reativos para telas de login/cadastro e template-driven para edição de notas.
-- HTTPClient para buscas/cadastro/login e `fetch` nativo para operações de atualização pontual.
-- Font Awesome via CDN para ícones.
-- Deploy contínuo na Vercel, consumindo a API `https://senai-gpt-api.azurewebsites.net/`.
+O Senai Notes é um app de anotações pessoais: cada usuário cria sua própria conta, escreve e organiza suas notas com título, descrição, imagem e etiquetas, e pode arquivar o que não precisa mais ver no dia a dia. Cada pessoa só enxerga as próprias notas — nada é compartilhado entre contas diferentes.
 
-## Integração com a API
+**Principais funcionalidades:**
 
-| Recurso | Rotas consumidas |
-|---------|-----------------|
-| Autenticação | `POST /login` |
-| Usuários | `POST /users` |
-| Notas | `GET /senainotes/notes`, `POST /senainotes/notes`, `PUT /senainotes/notes/{id}`, `PATCH /senainotes/notes/{id}`, `DELETE /senainotes/notes/{id}` |
-| Etiquetas | `GET /senainotes/tags` |
+- Cadastro de usuário e login protegido por senha
+- Criar, editar, arquivar e excluir notas
+- Organizar notas por etiquetas (tags)
+- Buscar notas por título, descrição ou etiqueta
+- Anexar uma imagem a cada nota
 
-Os tokens retornados no login são salvos localmente e enviados via header `Authorization` quando presentes.
+## Tecnologias usadas
 
-## Organização do código
+| Camada | Tecnologia |
+|---|---|
+| Front-end | Angular |
+| Back-end | Java + Spring Boot |
+| Autenticação | JWT (login com token, sem senha trafegando depois do login) |
+| Banco de dados | PostgreSQL |
+| Publicação do front-end | Vercel |
+| Publicação do back-end e do banco | Render |
 
-- `src/app/components`: componentes reutilizáveis (`header`, `left-panel`, `notes-list`, `note`, `note-options`).
-- `src/app/notes-screen`: composição da tela principal com comunicação entre componentes.
-- `src/app/user-module`: telas de autenticação (`login` e `novo usuário`).
-- `src/app/auth.guard.ts`: guarda de rota que bloqueia acesso sem token.
+## Como o projeto é organizado
 
-## Executando localmente
+O projeto é dividido em duas partes independentes que conversam entre si pela internet:
 
-1. Instale o [Node.js](https://nodejs.org/) 20 LTS ou superior.
-2. Instale as dependências:  
-   ```bash
-   npm install
-   ```
-3. Suba o servidor de desenvolvimento:  
-   ```bash
-   npm run start
-   ```
-4. Acesse `http://localhost:4200/` no navegador. O aplicativo recarrega automaticamente a cada alteração.
+- **Front-end (Angular)** — a tela que a pessoa usa: login, cadastro, lista de notas, edição. Sempre que algo é criado ou alterado, ele manda essa informação para o back-end guardar de verdade.
+- **Back-end (Spring Boot)** — recebe os pedidos do front-end, confere se a pessoa está autenticada, valida os dados e só então salva ou busca as informações no banco.
+- **Banco de dados (PostgreSQL)** — onde os usuários e as notas ficam guardados de forma permanente.
 
-## Scripts npm úteis
+Essa forma de organizar o sistema (tela separada da parte que guarda os dados, se comunicando por uma API) é o padrão mais comum hoje em dia para aplicações web, porque permite atualizar cada parte de forma independente e publicar cada uma na plataforma mais adequada para ela.
 
-- `npm run start`: inicia o servidor de desenvolvimento com live reload.
-- `npm run build`: gera o bundle otimizado em `dist/`.
-- `npm run watch`: recompila em modo development a cada alteração.
-- `npm test`: executa os testes unitários via Karma.
+## Segurança
+
+O login usa **JWT** (JSON Web Token): ao entrar com e-mail e senha, o usuário recebe um token que prova, nas próximas ações, que ele já está autenticado — sem precisar reenviar a senha toda hora. Esse token também garante que uma pessoa nunca consiga ver ou alterar notas de outra conta.
+
+## Deploy
+
+- O **front-end** está publicado na **Vercel**.
+- O **back-end** e o **banco de dados** estão publicados no **Render**.
+
+As duas partes ficam em endereços próprios na internet e se comunicam automaticamente, então o sistema funciona de qualquer lugar com acesso à internet, sem precisar instalar nada na máquina do usuário.
