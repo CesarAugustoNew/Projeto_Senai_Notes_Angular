@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 
@@ -14,7 +14,8 @@ interface Tag {
   templateUrl: './left-panel.html',
   styleUrls: ['./left-panel.css']
 })
-export class LeftPanel implements OnInit {
+export class LeftPanel implements OnInit, OnChanges {
+  @Input() atualizarLista = 0;
   @Output() enviarTag = new EventEmitter<string | null>();
   @Output() listarSomenteArquivadas = new EventEmitter<boolean>();
 
@@ -25,6 +26,19 @@ export class LeftPanel implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.getTags();
+  }
+
+  // Antes as etiquetas só eram buscadas uma vez, quando a tela abria.
+  // Criar uma nota nova com uma etiqueta inédita (ou editar uma nota
+  // pra usar uma etiqueta que ainda não existia) nunca fazia essa
+  // lista recarregar, então a etiqueta nunca aparecia aqui do lado,
+  // mesmo já estando salva de verdade na nota. Agora, sempre que
+  // atualizarLista mudar (o mesmo sinal que a lista de notas usa pra
+  // saber quando recarregar), a lista de etiquetas recarrega junto.
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('atualizarLista' in changes && !changes['atualizarLista'].firstChange) {
+      this.getTags();
+    }
   }
 
   private async getTags(): Promise<void> {
@@ -72,4 +86,3 @@ export class LeftPanel implements OnInit {
 
   }
 }
-

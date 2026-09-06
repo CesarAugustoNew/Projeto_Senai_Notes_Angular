@@ -1,6 +1,7 @@
 <div class="page__container">
   <!-- Painel esquerdo com filtros -->
   <left-panel
+    [atualizarLista]="atualizarLista"
     (enviarTag)="onEnviarTag($event)"
     (listarSomenteArquivadas)="onListarSomenteArquivadas($event)">
   </left-panel>

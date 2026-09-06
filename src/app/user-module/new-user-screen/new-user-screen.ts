@@ -6,6 +6,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom, timeout } from 'rxjs';
 import { ThemeToggle } from '../../components/theme-toggle/theme-toggle';
 import { environment } from '../../../environments/environment';
+import { ToastService } from '../../toast/toast.service';
 
 interface CreateUserResponse {
   [key: string]: unknown;
@@ -26,11 +27,22 @@ export class NewUserScreen {
   // provideZonelessChangeDetection() habilitado no app.
   isSubmitting = signal(false);
 
-  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private http: HttpClient,
+    private toast: ToastService
+  ) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      // Mesma regra do back-end (UsuarioRequest): mínimo 6 caracteres
+      // e ao menos uma letra maiúscula — validar aqui já avisa o
+      // usuário na hora, sem precisar esperar a resposta da API.
+      password: [
+        '',
+        [Validators.required, Validators.minLength(6), Validators.pattern(/[A-Z]/)]
+      ]
     });
   }
 
@@ -38,9 +50,19 @@ export class NewUserScreen {
   get email() { return this.form.get('email'); }
   get password() { return this.form.get('password'); }
 
+  private mensagemDeErroDaSenha(): string | null {
+    const senha = this.password;
+    if (!senha || !senha.errors) return null;
+    if (senha.errors['required']) return 'Informe uma senha.';
+    if (senha.errors['minlength']) return 'A senha deve ter no mínimo 6 caracteres.';
+    if (senha.errors['pattern']) return 'A senha deve ter ao menos uma letra maiúscula.';
+    return null;
+  }
+
   async onSignUpClick(): Promise<void> {
     if (!this.form.valid) {
-      window.alert('Preencha os campos corretamente.');
+      const erroSenha = this.mensagemDeErroDaSenha();
+      this.toast.error(erroSenha ?? 'Preencha os campos corretamente.');
       this.form.markAllAsTouched();
       return;
     }
@@ -61,7 +83,7 @@ export class NewUserScreen {
           .pipe(timeout(20000))
       );
 
-      window.alert('Usuario cadastrado com sucesso!');
+      this.toast.success('Usuário cadastrado com sucesso!');
       this.router.navigateByUrl('/login');
     } catch (error) {
       let message = 'Erro ao cadastrar o usuario, tente novamente.';
@@ -70,12 +92,21 @@ export class NewUserScreen {
         message = 'O servidor demorou demais para responder. Ele pode estar "acordando" — aguarde alguns segundos e tente novamente.';
       } else {
         const httpError = error as HttpErrorResponse;
-        if (typeof httpError?.error?.error === 'string') {
+        // Erros de validação de campo (ex.: senha sem maiúscula) vêm em
+        // "fields", não no "error" genérico — mostra o primeiro deles
+        // quando existir, senão cai no "error" genérico (ex.: e-mail
+        // duplicado, que já é uma mensagem pronta e específica).
+        const fields = httpError?.error?.fields as Record<string, string> | undefined;
+        const primeiroCampoComErro = fields ? Object.values(fields)[0] : undefined;
+
+        if (primeiroCampoComErro) {
+          message = primeiroCampoComErro;
+        } else if (typeof httpError?.error?.error === 'string') {
           message = httpError.error.error;
         }
       }
 
-      window.alert(message);
+      this.toast.error(message);
     } finally {
       this.isSubmitting.set(false);
     }

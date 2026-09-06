@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { ToastService } from '../../toast/toast.service';
 
 export interface NoteModel {
   id: string | number;
@@ -20,6 +21,8 @@ export class NoteOptions {
   @Output() aoFecharANota = new EventEmitter<void>();
 
   private readonly baseUrl = `${environment.apiUrl}/senainotes/notes`;
+
+  constructor(private toast: ToastService) {}
 
   private buildHeaders(includeJson = false): Record<string, string> {
     const headers: Record<string, string> = includeJson ? { 'Content-Type': 'application/json' } : {};
@@ -41,9 +44,9 @@ export class NoteOptions {
     });
 
     if (!res.ok) {
-      alert('Erro ao arquivar a nota');
+      this.toast.error('Erro ao arquivar a nota');
     } else {
-      alert(`Nota "${this.notaSelecionada.title}" arquivada!`);
+      this.toast.success(`Nota "${this.notaSelecionada.title}" arquivada!`);
     }
 
     this.aoFecharANota.emit();
@@ -58,9 +61,9 @@ export class NoteOptions {
     });
 
     if (!res.ok) {
-      alert('Erro ao desarquivar a nota');
+      this.toast.error('Erro ao desarquivar a nota');
     } else {
-      alert(`Nota "${this.notaSelecionada.title}" desarquivada!`);
+      this.toast.success(`Nota "${this.notaSelecionada.title}" desarquivada!`);
     }
 
     this.aoFecharANota.emit();
@@ -74,12 +77,11 @@ export class NoteOptions {
     });
 
     if (!res.ok) {
-      alert('Erro ao deletar a nota');
+      this.toast.error('Erro ao deletar a nota');
     } else {
-      alert(`Nota "${this.notaSelecionada.title}" deletada!`);
+      this.toast.success(`Nota "${this.notaSelecionada.title}" deletada!`);
     }
 
     this.aoFecharANota.emit();
   }
 }
-

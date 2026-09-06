@@ -6,6 +6,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom, timeout } from 'rxjs';
 import { ThemeToggle } from '../../components/theme-toggle/theme-toggle';
 import { environment } from '../../../environments/environment';
+import { ToastService } from '../../toast/toast.service';
 
 interface LoginResponse {
   accessToken?: string;
@@ -33,7 +34,12 @@ export class LoginScreen {
   // (ou nada parecer acontecer) mesmo depois da resposta chegar.
   isSubmitting = signal(false);
 
-  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private http: HttpClient,
+    private toast: ToastService
+  ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -45,7 +51,7 @@ export class LoginScreen {
 
   async onLoginClick(): Promise<void> {
     if (!this.form.valid) {
-      window.alert('Preencha os campos corretamente.');
+      this.toast.error('Preencha os campos corretamente.');
       this.form.markAllAsTouched();
       return;
     }
@@ -68,7 +74,7 @@ export class LoginScreen {
           .pipe(timeout(20000))
       );
 
-      window.alert('Login realizado com sucesso!');
+      this.toast.success('Login realizado com sucesso!');
 
       const token = typeof response?.accessToken === 'string' ? response.accessToken : undefined;
       const userId = typeof response?.user?.id === 'string' ? response.user.id: undefined;
@@ -94,7 +100,7 @@ export class LoginScreen {
         }
       }
 
-      window.alert(message);
+      this.toast.error(message);
     } finally {
       this.isSubmitting.set(false);
     }

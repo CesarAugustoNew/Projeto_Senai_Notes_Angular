@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { ToastService } from '../../toast/toast.service';
 
 export interface NoteModel {
   id: string | number;
@@ -32,6 +33,8 @@ export class Note implements OnChanges {
   description = '';
   imageFile: File | null = null;
   imageURL = '';
+
+  constructor(private toast: ToastService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('notaSelecionada' in changes) {
@@ -76,8 +79,9 @@ export class Note implements OnChanges {
       date: new Date().toISOString()
     };
 
+    const toastId = this.toast.loading('Salvando a nota...');
+
     try {
-      const toastId = this.loadingToast('Salvando a nota...');
       const token = localStorage.getItem('token');
       const headers: Record<string, string> = { 'Content-Type': 'application/json' };
 
@@ -92,23 +96,23 @@ export class Note implements OnChanges {
       });
 
       if (response.ok) {
-        this.updateToast(toastId, 'Nota salva com sucesso!', true);
+        this.toast.resolve(toastId, 'Nota salva com sucesso!');
         this.imageFile = null;
         this.imageURL = '';
         this.aoFecharANota.emit();
       } else {
-        this.updateToast(toastId, 'Erro ao salvar a nota.', false);
+        this.toast.reject(toastId, 'Erro ao salvar a nota.');
       }
     } catch (err) {
       console.error('Erro ao salvar a nota:', err);
-      alert('Erro de rede ao salvar a nota.');
+      this.toast.reject(toastId, 'Erro de rede ao salvar a nota.');
     }
   }
 
   aoDefinirAImagem(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || !input.files.length) {
-      alert('É necessário selecionar uma imagem.');
+      this.toast.error('É necessário selecionar uma imagem.');
       return;
     }
     const file = input.files[0];
@@ -126,17 +130,4 @@ export class Note implements OnChanges {
       reader.readAsDataURL(file);
     });
   }
-
-  // Helpers simples para “toasts” sem libs externas
-  private loadingToast(msg: string): number {
-    console.log('[toast:loading]', msg);
-    // Apenas simulando um id
-    return Date.now();
-  }
-
-  private updateToast(id: number, msg: string, success: boolean): void {
-    console.log(`[toast:update:${id}]`, success ? 'success' : 'error', msg);
-    alert(msg);
-  }
 }
-

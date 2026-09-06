@@ -1,0 +1,22 @@
+<div class="toast-container">
+  <div
+    *ngFor="let toast of toastService.toasts()"
+    class="toast"
+    [ngClass]="'toast--' + toast.type"
+  >
+    <span class="toast__icon">
+      <ng-container [ngSwitch]="toast.type">
+        <ng-container *ngSwitchCase="'success'">✓</ng-container>
+        <ng-container *ngSwitchCase="'error'">✕</ng-container>
+        <ng-container *ngSwitchCase="'loading'">
+          <span class="toast__spinner"></span>
+        </ng-container>
+        <ng-container *ngSwitchDefault>ℹ</ng-container>
+      </ng-container>
+    </span>
+
+    <span class="toast__message">{{ toast.message }}</span>
+
+    <button class="toast__close" (click)="dismiss(toast.id)" aria-label="Fechar">✕</button>
+  </div>
+</div>
