@@ -16,6 +16,13 @@ Um sistema de anotações completo, com login e permissões próprias, construí
 
 </div>
 
+## Demonstração
+<img width="1916" height="916" alt="image" src="https://github.com/user-attachments/assets/40b53807-a63a-4db5-bcfe-d5ebed7e5fee" />
+<br>
+<br>
+<img width="1918" height="918" alt="image" src="https://github.com/user-attachments/assets/c0901375-3729-4a13-9129-69d6f16d21e6" />
+
+
 ---
 
 ## Sobre o projeto
