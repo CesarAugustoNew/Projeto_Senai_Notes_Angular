@@ -8,7 +8,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](#)
 [![Deploy](https://img.shields.io/badge/Deploy-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](#)
 
-[**🔗 Aplicação publicada**](https://projeto-senai-notes-angular.vercel.app) · [**⚙️ Repositório da API**](#)
+[**🔗 Aplicação publicada**](https://projeto-senai-notes-angular.vercel.app) · [**⚙️ Repositório da API**](https://github.com/CesarAugustoNew/SpringBootAPI-Senai-Notes)
 
 </div>
 
