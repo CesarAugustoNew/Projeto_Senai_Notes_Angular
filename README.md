@@ -1,8 +1,8 @@
 <div align="center">
+<img src="https://raw.githubusercontent.com/twbs/icons/main/icons/journal-text.svg" width="60" alt="Logo" />
 
 # Senai Notes
 
-Front-end de um sistema de anotações com login próprio, construído em **Angular**.
 
 [![Frontend](https://img.shields.io/badge/Frontend-Angular-DD0031?style=flat-square&logo=angular&logoColor=white)](#)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](#)
